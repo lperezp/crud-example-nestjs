@@ -11,7 +11,6 @@ export class TasksService {
   }
 
   getTaskById(id: string) {
-    console.log('id', id);
     return this.tasks.find(task => task.id === id);
   }
 
@@ -24,6 +23,17 @@ export class TasksService {
       statusTask: StatusTask.OPEN,
     };
     this.tasks.push(task);
+    return task;
+  }
+
+  deleteTask(id: string) {
+    this.tasks = this.tasks.filter(task => task.id !== id);
+  }
+
+  updateTask(id: string, status) {
+    const task = this.tasks.find(task => task.id === id);
+    console.log('task', task);
+    task.statusTask = status;
     return task;
   }
 }
