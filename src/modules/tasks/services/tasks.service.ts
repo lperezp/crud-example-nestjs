@@ -1,9 +1,16 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { v4 as uuidv4 } from 'uuid';
 import { CreateTasksDTO } from '../dto/tasks.dto';
 import { FilterTasksDTO } from '../dto/filterTasks.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { TasksRepository } from '../repository/tasks.repository';
+import { Task } from '../entities/taks.entity';
 @Injectable()
+// https://typeorm.delightful.studio/classes/_repository_repository_.repository.html
 export class TasksService {
+  constructor(
+    @InjectRepository(TasksRepository)
+    private tskRepository: TasksRepository,
+  ) {}
   // getAllTasks() {
   //   return this.tasks;
   // }
@@ -23,15 +30,17 @@ export class TasksService {
   //   }
   //   return tasks;
   // }
-  // getTaskById(id: string) {
-  //   const found = this.tasks.find(task => task.id === id);
-  //   // Agregamos esta validación cuando no hay datos con ese Id
-  //   if (!found) {
-  //     // Podemos agregar una respuesta personalizada
-  //     throw new NotFoundException(`Task with Id ${id} not found.`);
-  //   }
-  //   return found;
-  // }
+
+  async getTaskById(id: number): Promise<Task> {
+    const found = await this.tskRepository.findOne(id);
+    // Agregamos esta validación cuando no hay datos con ese Id
+    if (!found) {
+      // Podemos agregar una respuesta personalizada
+      throw new NotFoundException(`Task with Id ${id} not found.`);
+    }
+    return found;
+  }
+
   // createTask(createTask: CreateTasksDTO) {
   //   const { title, description } = createTask;
   //   const task: Task = {
