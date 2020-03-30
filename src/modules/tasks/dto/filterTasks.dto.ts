@@ -1,5 +1,5 @@
-import { StatusTask } from '../models/tasks.models';
 import { IsOptional, IsNotEmpty, IsIn } from 'class-validator';
+import { StatusTask } from '../enum/status-task.enum';
 export class FilterTasksDTO {
   /*
    * Agregamos el decorador @IsOptional para indicar que el campo es opcional
