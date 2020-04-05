@@ -3,7 +3,7 @@ import { CreateTasksDTO } from '../dto/tasks.dto';
 import { FilterTasksDTO } from '../dto/filterTasks.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { TasksRepository } from '../repository/tasks.repository';
-import { Task } from '../entities/taks.entity';
+import { Task } from '../entities/task.entity';
 import { StatusTask } from '../enum/status-task.enum';
 @Injectable()
 // https://typeorm.delightful.studio/classes/_repository_repository_.repository.html

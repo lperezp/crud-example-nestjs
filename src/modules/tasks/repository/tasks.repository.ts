@@ -1,5 +1,5 @@
 import { Repository, EntityRepository } from 'typeorm';
-import { Task } from '../entities/taks.entity';
+import { Task } from '../entities/task.entity';
 import { StatusTask } from '../enum/status-task.enum';
 
 @EntityRepository(Task)
