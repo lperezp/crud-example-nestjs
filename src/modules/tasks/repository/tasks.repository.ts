@@ -1,6 +1,8 @@
 import { Repository, EntityRepository } from 'typeorm';
 import { Task } from '../entities/task.entity';
 import { StatusTask } from '../enum/status-task.enum';
+import { CreateTasksDTO } from '../dto/tasks.dto';
+import { User } from 'src/modules/auth/entities/auth.entity';
 
 // https://github.com/typeorm/typeorm/blob/master/docs/select-query-builder.md
 @EntityRepository(Task)
@@ -26,14 +28,15 @@ export class TasksRepository extends Repository<Task> {
     return tasks;
   }
 
-  async createTask(createTask): Promise<Task> {
-    const { title, description } = createTask;
+  async createTask(createTaskDTO: CreateTasksDTO, user: User): Promise<Task> {
+    const { title, description } = createTaskDTO;
     const task = new Task();
     task.title = title;
     task.description = description;
     task.status = StatusTask.OPEN;
+    task.user = user;
     await task.save();
-
+    delete task.user;
     return task;
   }
 }

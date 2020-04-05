@@ -5,6 +5,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { TasksRepository } from '../repository/tasks.repository';
 import { Task } from '../entities/task.entity';
 import { StatusTask } from '../enum/status-task.enum';
+import { User } from 'src/modules/auth/entities/auth.entity';
 @Injectable()
 // https://typeorm.delightful.studio/classes/_repository_repository_.repository.html
 export class TasksService {
@@ -27,8 +28,8 @@ export class TasksService {
     return found;
   }
 
-  async createTask(createTaskDTO: CreateTasksDTO): Promise<Task> {
-    return await this.tskRepository.createTask(createTaskDTO);
+  async createTask(createTaskDTO: CreateTasksDTO, user: User): Promise<Task> {
+    return await this.tskRepository.createTask(createTaskDTO, user);
   }
 
   async deleteTask(id: number): Promise<void> {
