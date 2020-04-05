@@ -15,8 +15,8 @@ import { CreateTasksDTO } from '../dto/tasks.dto';
 import { TasksService } from '../services/tasks.service';
 import { FilterTasksDTO } from '../dto/filterTasks.dto';
 import { TaskStatusValidationPipe } from '../pipes/pipes-status-validation.pipe';
-import { Task } from '../entities/taks.entity';
 import { StatusTask } from '../enum/status-task.enum';
+import { Task } from '../entities/task.entity';
 
 @Controller('tasks')
 export class TasksController {

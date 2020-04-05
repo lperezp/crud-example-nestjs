@@ -1,5 +1,5 @@
 import { Repository, EntityRepository } from 'typeorm';
-import { Task } from '../entities/taks.entity';
+import { Task } from '../entities/task.entity';
 import { StatusTask } from '../enum/status-task.enum';
 
 // https://github.com/typeorm/typeorm/blob/master/docs/select-query-builder.md
