@@ -1,6 +1,6 @@
 import { Controller, Post, Body, ValidationPipe } from '@nestjs/common';
 import { AuthCredentialsDTO } from '../../dto/auth-credentials.dto';
-import { AuthService } from '../../services/auth/auth.service';
+import { AuthService } from '../../services/auth.service';
 
 @Controller('auth')
 export class AuthController {
@@ -16,7 +16,7 @@ export class AuthController {
   @Post('/signin')
   signIn(
     @Body(ValidationPipe) authCredentialsDTO: AuthCredentialsDTO,
-  ): Promise<void> {
+  ): Promise<{ accessToken: string }> {
     return this.authSrvc.signIn(authCredentialsDTO);
   }
 }
