@@ -9,6 +9,8 @@ import {
 import { AuthCredentialsDTO } from '../dto/auth-credentials.dto';
 import { AuthService } from '../services/auth.service';
 import { AuthGuard } from '@nestjs/passport';
+import { User } from '../entities/auth.entity';
+import { GetUser } from '../decorators/get-user.decorator';
 
 @Controller('auth')
 export class AuthController {
@@ -30,7 +32,7 @@ export class AuthController {
 
   @Post('/test')
   @UseGuards(AuthGuard())
-  test(@Req() req) {
-    console.log(req);
+  test(@GetUser() user: User) {
+    console.log(user);
   }
 }
