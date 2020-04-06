@@ -18,8 +18,10 @@ export class TasksService {
     return this.tskRepository.getTasks(filterDTO, user);
   }
 
-  async getTaskById(id: number): Promise<Task> {
-    const found = await this.tskRepository.findOne(id);
+  async getTaskById(id: number, user: User): Promise<Task> {
+    const found = await this.tskRepository.findOne({
+      where: { id, userId: user.id },
+    });
     // Agregamos esta validación cuando no hay datos con ese Id
     if (!found) {
       // Podemos agregar una respuesta personalizada
@@ -32,15 +34,15 @@ export class TasksService {
     return await this.tskRepository.createTask(createTaskDTO, user);
   }
 
-  async deleteTask(id: number): Promise<void> {
-    const found = await this.tskRepository.delete(id);
+  async deleteTask(id: number, user: User): Promise<void> {
+    const found = await this.tskRepository.delete({ id, userId: user.id });
     if (found.affected === 0) {
       throw new NotFoundException(`Task with Id ${id} not found.`);
     }
   }
 
-  async updateTask(id: number, status: StatusTask): Promise<Task> {
-    const task = await this.getTaskById(id);
+  async updateTask(id: number, status: StatusTask, user: User): Promise<Task> {
+    const task = await this.getTaskById(id, user);
     task.status = status;
     await task.save();
     return task;
