@@ -3,14 +3,16 @@ import { Task } from '../entities/task.entity';
 import { StatusTask } from '../enum/status-task.enum';
 import { CreateTasksDTO } from '../dto/tasks.dto';
 import { User } from 'src/modules/auth/entities/auth.entity';
+import { FilterTasksDTO } from '../dto/filterTasks.dto';
 
 // https://github.com/typeorm/typeorm/blob/master/docs/select-query-builder.md
 @EntityRepository(Task)
 export class TasksRepository extends Repository<Task> {
-  async getTasks(filterDTO): Promise<Task[]> {
+  async getTasks(filterDTO: FilterTasksDTO, user: User): Promise<Task[]> {
     const { status, search } = filterDTO;
     const query = this.createQueryBuilder('task');
 
+    query.where(`task.userId =:userId`, { userId: user.id });
     // andWhere es para agregar condiciones where ... andWhere
     if (status) {
       query.andWhere('task.status = :status', { status });
