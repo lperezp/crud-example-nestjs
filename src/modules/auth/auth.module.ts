@@ -6,6 +6,9 @@ import { UserRepository } from './repository/user.repository';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 import { JwtStrategy } from './strategy/jwt.strategy';
+import * as config from 'config';
+
+const JWT_CONFIG = config.get('jwt');
 @Module({
   imports: [
     // insertamos el modulo de PassportJS
@@ -16,9 +19,9 @@ import { JwtStrategy } from './strategy/jwt.strategy';
        * Esta variable se utiliza para verificar la firma de tokens.
        *Puede ser de cualquier valor.
        */
-      secret: 'topSecret51',
+      secret: process.env.JWT_SECRET || JWT_CONFIG.secret,
       signOptions: {
-        expiresIn: 3600,
+        expiresIn: JWT_CONFIG.expiresIn,
       },
     }),
     TypeOrmModule.forFeature([UserRepository]),
